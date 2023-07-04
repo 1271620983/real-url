@@ -30,7 +30,6 @@ except Exception as e:
 print('room_id', room_id)
 
 try:
-
     params = (
         ('app_name', 'douyin_web'),
         ('live_id', '1'),
@@ -45,13 +44,11 @@ try:
         ('browser_version','14.0.0.0'),
         ('web_rid',web_rid),
     )
-
+    
     response = requests.get('https://live.douyin.com/webcast/room/web/enter/', headers=headers, params=params).json()
-
     hls_pull_url = response['data']['data'][0]['stream_url']['hls_pull_url']
-
-
     print(hls_pull_url)
+    
 except Exception as e:
     if DEBUG:
         print(e)
