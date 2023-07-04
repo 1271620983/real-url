@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # @Time     : 2023/7/4 21:25
-# @Author   : HSJ
+# @Author   : Wen
 # @Software : PyCharm
 
 import re
@@ -21,7 +21,7 @@ try:
     url = re.search(r'(https.*)', url).group(1)
     web_rid = re.search(r'(\d.*)',url).group(1)
     response = requests.get(url, headers=headers).text
-    room_id = re.search(r'rlweWe(\d{19})', response).group(1)
+    room_id = re.search(r'/*.(\d{19})', response).group(1)
 except Exception as e:
     if DEBUG:
         print(e)
@@ -30,6 +30,7 @@ except Exception as e:
 print('room_id', room_id)
 
 try:
+
     params = (
         ('app_name', 'douyin_web'),
         ('live_id', '1'),
@@ -44,11 +45,13 @@ try:
         ('browser_version','14.0.0.0'),
         ('web_rid',web_rid),
     )
-    
+
     response = requests.get('https://live.douyin.com/webcast/room/web/enter/', headers=headers, params=params).json()
+
     hls_pull_url = response['data']['data'][0]['stream_url']['hls_pull_url']
+
+
     print(hls_pull_url)
-    
 except Exception as e:
     if DEBUG:
         print(e)
